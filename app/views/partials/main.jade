@@ -1,0 +1,21 @@
+div(ng-include='\'partials/navbar\'')
+
+.jumbotron
+    h4 New Bot
+    input(type='text' placeholder='Bot Name' class='form-control' ng-model='new_bot.name')
+    textarea(class='form-control' placeholder='Bot Code' ng-model='new_bot.code')
+    button(ng-click='addBot(new_bot)' class='btn btn-success') Add Bot
+    h4 Bot 1
+    select(class='form-control' ng-model='bot1' ng-change='change_bot1(bot1)' ng-options='bot.name for bot in bots')
+    textarea(class='form-control' ng-model='bot1.code')
+
+    h4 Bot 2
+    select(class='form-control' ng-model='bot2' ng-change='change_bot2(bot2)' ng-options='bot.name for bot in bots')
+    textarea(class='form-control' ng-model='bot2.code')
+
+    div
+        button(ng-click='play(true)' class='btn btn-primary') Play
+
+    table(border=1 ng-repeat='board in game_history')
+        tr(ng-repeat='row in board track by $index')
+            td(ng-repeat='char in row track by $index') {{char}}
