@@ -94,13 +94,17 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
 
             // parse the new board to a matrix
             var new_board = JSON.parse(response.results[0].received.replace(/'/g, '"'));
+            console.log(JSON.stringify(new_board));
 
             // get the new move from the new board
             var move = new_board.compare($scope.current_board);
-
+            console.log('Move = ' + move.row + ', ' + move.column);
+            if(move.row === undefined) {
+                console.log(JSON.stringify(new_board));
+            }
             // get all the possible valid moves
-            var valid_moves = getValidMoves($scope.current_board, 'X');
-            console.log(valid_moves);
+            var valid_moves = getValidMoves($scope.current_board, turn);
+            console.log(JSON.stringify(valid_moves));
 
             // check if player move is valid
             var is_move_valid = isValidMove(valid_moves, move);
@@ -108,10 +112,12 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
 
             if (is_move_valid) {
                 $scope.game_history.push(new_board);
-                $scope.current_board = new_board;
                 console.log($scope.current_board, move);
+                console.log(JSON.stringify(move));
                 var toFlip = checkValidity($scope.current_board, move);
                 console.log('To Flip = ' + toFlip);
+
+                $scope.current_board = new_board;
 
                 if (!toFlip) {
                     console.log("Error flipping");
@@ -161,8 +167,12 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
     var checkValidity = function(board, move) {
         if (!isOnBoard(move.row, move.column)) { return false; }
 
+        if (!isMoveEmpty(board, move)) { return false; }
+
         var adjacents = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];
         var toFlip = [];
+
+        board[move.row][move.column] = move.side;
 
         var opposite = 'O';
         if (move.side === 'O') {
@@ -201,6 +211,7 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
                 }
             }
         }
+        board[move.row][move.column] = '_';
         if (toFlip.length === 0) {
             return false;
         } else {
@@ -210,6 +221,10 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
 
     var isOnBoard = function(row, column) {
         return row < 8 && column < 8 && row >= 0 && column >= 0;
+    };
+
+    var isMoveEmpty = function(board, move) {
+        return board[move.row][move.column] === '_';
     };
 
     var checkGameStatus = function(game_board) {
