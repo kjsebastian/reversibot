@@ -1,8 +1,6 @@
 import random
 def next_move(board, side):
   validmoves = getValidMoves(board, side)
-  print side + ' = '
-  print validmoves
   firstmove = random.choice(validmoves)
   board[firstmove[0]][firstmove[1]] = side
   return board
@@ -14,6 +12,8 @@ def getValidMoves(board, side):
       move = {'row':i, 'column':j, 'side':side}
       if checkValidity(board, move) != False:
         validmoves.append([i, j])
+  if not validmoves:
+    return False
   return validmoves
 
 def checkValidity(board, move):

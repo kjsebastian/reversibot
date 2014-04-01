@@ -2,14 +2,51 @@
 
 angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $resource) {
 
-    $scope.stupid_bot = {name: 'Stupid Bot', code: "import random\ndef next_move(board, side):\n  validmoves = getValidMoves(board, side)\n  print side + ' = '\n  print validmoves\n  firstmove = random.choice(validmoves)\n  board[firstmove[0]][firstmove[1]] = side\n  return board\n\ndef getValidMoves(board, side):\n  validmoves = []\n  for i in range(8):\n    for j in range(8):\n      move = {'row':i, 'column':j, 'side':side}\n      if checkValidity(board, move) != False:\n        validmoves.append([i, j])\n  return validmoves\n\ndef checkValidity(board, move):\n  if not isOnBoard(move['row'], move['column']):\n    return False\n\n  if not isMoveEmpty(board, move):\n    return False\n\n  adjacents = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]\n  board[move['row']][move['column']] = move['side']\n  opposite = 'O'\n  if move['side'] == 'O':\n    opposite = 'X'\n  for i in range(len(adjacents)):\n    x = move['row']\n    y = move['column']\n    x += adjacents[i][0]\n    y += adjacents[i][1]\n    if isOnBoard(x, y) and board[x][y] == opposite:\n      x += adjacents[i][0] \n      y += adjacents[i][1]\n      if not isOnBoard(x, y):\n        continue\n      while board[x][y] == opposite:\n        x += adjacents[i][0]\n        y += adjacents[i][1]\n\n        if not isOnBoard(x, y):\n          break\n      if not isOnBoard(x, y):\n        continue\n      if board[x][y] == move['side']:\n        board[move['row']][move['column']] = '_'\n        return True\n  board[move['row']][move['column']] = '_'\n  return False \n\ndef isOnBoard(row, column):\n  return row<8 and column<8 and row >=0 and column >=0\n\ndef isMoveEmpty(board, move):\n  return board[move['row']][move['column']] == '_'", language: 'python'};
-    $scope.bots = [];
-    $scope.bots.push($scope.stupid_bot);
+    var new_bot_editor = ace.edit('new_bot_editor');
+    new_bot_editor.setTheme("ace/theme/monokai");
+    new_bot_editor.getSession().setMode("ace/mode/python");
+
+    var bot1_editor = ace.edit('bot1_editor');
+    bot1_editor.setTheme("ace/theme/monokai");
+    bot1_editor.getSession().setMode("ace/mode/python");
+
+    var bot2_editor = ace.edit('bot2_editor');
+    bot2_editor.setTheme("ace/theme/monokai");
+    bot2_editor.getSession().setMode("ace/mode/python");
+    bot2_editor.setReadOnly(true);
+
+    $scope.starting_bot = {name: 'Starting Bot', code: "#You may import\n#import random\ndef next_move(board, side):\n  validmoves = getValidMoves(board, side)\n  # Write your logic\n\ndef getValidMoves(board, side):\n  validmoves = []\n  for i in range(8):\n    for j in range(8):\n      move = {'row':i, 'column':j, 'side':side}\n      if checkValidity(board, move) != False:\n        validmoves.append([i, j])\n  return validmoves\n\ndef checkValidity(board, move):\n  if not isOnBoard(move['row'], move['column']):\n    return False\n\n  if not isMoveEmpty(board, move):\n    return False\n\n  adjacents = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]\n  board[move['row']][move['column']] = move['side']\n  opposite = 'O'\n  if move['side'] == 'O':\n    opposite = 'X'\n  for i in range(len(adjacents)):\n    x = move['row']\n    y = move['column']\n    x += adjacents[i][0]\n    y += adjacents[i][1]\n    if isOnBoard(x, y) and board[x][y] == opposite:\n      x += adjacents[i][0] \n      y += adjacents[i][1]\n      if not isOnBoard(x, y):\n        continue\n      while board[x][y] == opposite:\n        x += adjacents[i][0]\n        y += adjacents[i][1]\n\n        if not isOnBoard(x, y):\n          break\n      if not isOnBoard(x, y):\n        continue\n      if board[x][y] == move['side']:\n        board[move['row']][move['column']] = '_'\n        return True\n  board[move['row']][move['column']] = '_'\n  return False \n\ndef isOnBoard(row, column):\n  return row<8 and column<8 and row >=0 and column >=0\n\ndef isMoveEmpty(board, move):\n  return board[move['row']][move['column']] == '_'", language: 'Python'};
+    $scope.starting_bot_js = {name: 'Starting Bot', code: "var next_move = function(board, side) {\n    var valid_moves = getValidMoves(board,side)\n    // Write your code here\n};\nvar getValidMoves = function(board, side) {\n    var valid_moves = [];\n    var move = {};\n    for (var i = 0; i < 8; i++) {\n        for (var j = 0; j < 8; j++) {\n            move = {row: i, column: j, side: side}\n            if (checkValidity(board, move) !== false) {\n                valid_moves.push({row: i, column: j});\n            }\n        }\n    }\n    return valid_moves;\n};\nvar checkValidity = function(board, move) {\n    if (!isOnBoard(move.row, move.column)) { return false; }\n    if (!isMoveEmpty(board, move)) { return false; }\n    var adjacents = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]];\n    var toFlip = [];\n    board[move.row][move.column] = move.side;\n    var opposite = 'O';\n    if (move.side === 'O') {\n        opposite = 'X';\n    }\n    for (var i = 0; i < adjacents.length; i++) {\n        var x = move.row;\n        var y = move.column;\n        x += adjacents[i][0];\n        y += adjacents[i][1];\n        if (isOnBoard(x, y) && board[x][y] === opposite) {\n            x += adjacents[i][0];\n            y += adjacents[i][1];\n            if (!isOnBoard(x, y)) { continue; }\n            while (board[x][y] === opposite) {\n                x += adjacents[i][0];\n                y += adjacents[i][1];\n                if (!isOnBoard(x, y)) { break; }\n            }\n            if (!isOnBoard(x, y)) { continue; }\n            if (board[x][y] === move.side) {\n                while (true) {\n                    x -= adjacents[i][0];\n                    y -= adjacents[i][1];\n                    if (x === move.row && y === move.column) { break; }\n                    toFlip.push([x, y]);\n                }\n            }\n        }\n    }\n    board[move.row][move.column] = '_';\n    if (toFlip.length === 0) {\n        return false;\n    } else {\n        return toFlip;\n    }\n};\nvar isOnBoard = function(row, column) {\n    return row < 8 && column < 8 && row >= 0 && column >= 0;\n};\nvar isMoveEmpty = function(board, move) {\n    return board[move.row][move.column] === '_';\n};", language:'javascript'};
+    // $scope.stupid_bot = {name: 'Stupid Bot', code: "import random\ndef next_move(board, side):\n  validmoves = getValidMoves(board, side)\n  print side + ' = '\n  print validmoves\n  firstmove = random.choice(validmoves)\n  board[firstmove[0]][firstmove[1]] = side\n  return board\n\ndef getValidMoves(board, side):\n  validmoves = []\n  for i in range(8):\n    for j in range(8):\n      move = {'row':i, 'column':j, 'side':side}\n      if checkValidity(board, move) != False:\n        validmoves.append([i, j])\n  return validmoves\n\ndef checkValidity(board, move):\n  if not isOnBoard(move['row'], move['column']):\n    return False\n\n  if not isMoveEmpty(board, move):\n    return False\n\n  adjacents = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1]]\n  board[move['row']][move['column']] = move['side']\n  opposite = 'O'\n  if move['side'] == 'O':\n    opposite = 'X'\n  for i in range(len(adjacents)):\n    x = move['row']\n    y = move['column']\n    x += adjacents[i][0]\n    y += adjacents[i][1]\n    if isOnBoard(x, y) and board[x][y] == opposite:\n      x += adjacents[i][0] \n      y += adjacents[i][1]\n      if not isOnBoard(x, y):\n        continue\n      while board[x][y] == opposite:\n        x += adjacents[i][0]\n        y += adjacents[i][1]\n\n        if not isOnBoard(x, y):\n          break\n      if not isOnBoard(x, y):\n        continue\n      if board[x][y] == move['side']:\n        board[move['row']][move['column']] = '_'\n        return True\n  board[move['row']][move['column']] = '_'\n  return False \n\ndef isOnBoard(row, column):\n  return row<8 and column<8 and row >=0 and column >=0\n\ndef isMoveEmpty(board, move):\n  return board[move['row']][move['column']] == '_'", language: 'python'};
+    $scope.bots = [$scope.stupid_bot];
+
+    new_bot_editor.setValue($scope.starting_bot.code);
+    // bot1_editor.setValue($scope.stupid_bot.code);
+    // bot2_editor.setValue($scope.stupid_bot.code);
+
+    $scope.languages = ['Python', 'Javascript'];
+
+    $scope.getBots = function (lang) {
+        lang = lang.toLowerCase();
+        $scope.bots = [];
+        $http.get('/api/all_bots/' + lang)
+            .success(function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    $scope.bots.push(data[i]);
+                }
+            })
+            .error(function(error) {
+                console.log(error);
+            });
+    };
+
+    $scope.getBots('python');
 
     $scope.addBot = function(new_bot) {
-        $http.post('/api/new_bot', {name: new_bot.name, code: new_bot.code})
+        $http.post('/api/new_bot', {name: new_bot.name, language:$scope.lang.toLowerCase(), code: new_bot_editor.getValue()})
             .success(function(data, status) {
-                console.log(new_bot);
+                // console.log(new_bot);
+                // $scope.bots = [];
                 $scope.bots.push(new_bot);
             })
             .error(function(data, error) {
@@ -42,13 +79,32 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
 
     $scope.change_bot1 = function(bot) {
         $scope.bot1 = bot;
-        $scope.bot1.code = bot.code;
+        bot1_editor.setValue(bot.code);
     };
 
     $scope.change_bot2 = function(bot) {
         $scope.bot2 = bot;
-        $scope.bot2.code = bot.code;
+        bot2_editor.setValue(bot.code);
     };
+
+    $scope.change_lang = function(lang) {
+
+        $scope.getBots(lang);
+
+        lang = lang.toLowerCase();
+        new_bot_editor.getSession().setMode("ace/mode/"+lang);
+        bot1_editor.getSession().setMode("ace/mode/"+lang);
+        bot2_editor.getSession().setMode("ace/mode/"+lang);
+
+        if (lang === 'python') {
+            new_bot_editor.destroy();
+            new_bot_editor.setValue($scope.starting_bot.code);
+            return;
+        } else if (lang === 'javascript') {
+            new_bot_editor.destroy();
+            new_bot_editor.setValue($scope.starting_bot_js.code);
+        }
+    }
 
     var next_turn = '';
 
@@ -62,18 +118,27 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
             turn = next_turn;
         }
 
-        console.log(turn);
+        // console.log(turn);
 
         if (turn === 'X') {
             next_turn = 'O';
-            tests = ">>> next_move(" + JSON.stringify($scope.current_board) + ", 'X') \n 'ANYTHING'";
+            if ($scope.lang.toLowerCase() === 'python') {
+                tests = ">>> next_move(" + JSON.stringify($scope.current_board) + ", 'X') \n 'ANYTHING'";
+            } else {
+                tests = "next_move(" + JSON.stringify($scope.current_board) + ", 'X'), false";
+            }
             data = {
                 solution: $scope.bot1.code, 
                 tests: tests
             };
         } else {
             next_turn = 'X';
-            tests = ">>> next_move(" + JSON.stringify($scope.current_board) + ", 'O') \n 'ANYTHING'";
+            if ($scope.lang.toLowerCase() === 'python') {
+                tests = ">>> next_move(" + JSON.stringify($scope.current_board) + ", 'O') \n 'ANYTHING'";
+            } else {
+                tests = "next_move(" + JSON.stringify($scope.current_board) + ", 'O'), false";
+            }
+
             data = {
                 solution: $scope.bot2.code, 
                 tests: tests
@@ -82,33 +147,46 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
 
         $scope.VerifierModel.get({
             'problem': data.solution,
-            'tests': data.tests
+            'tests': data.tests,
+            'language': $scope.lang
         }, function(response) {
 
+            // get all the possible valid moves
+            var valid_moves = getValidMoves($scope.current_board, turn);
+            if (valid_moves.length === 0) {
+                var winner = checkGameStatus($scope.current_board, valid_moves);
+                if (winner.name) {
+                    $scope.winner = winner;
+                    console.log(winner);
+                    $('#alert-win').removeClass('hide');
+                }
+            }
+
             // parse the new board to a matrix
+            if (response.errors || response.results[0].received === 'False') {
+                console.log('No More Valid Moves Possible!');
+                $('#alert-info').removeClass('hide');
+                return;
+            }
             var new_board = JSON.parse(response.results[0].received.replace(/'/g, '"'));
-            console.log(JSON.stringify(new_board));
+            // console.log(JSON.stringify(new_board));
 
             // get the new move from the new board
             var move = new_board.compare($scope.current_board);
-            console.log('Move = ' + move.row + ', ' + move.column);
-            if(move.row === undefined) {
-                console.log(JSON.stringify(new_board));
-            }
-            // get all the possible valid moves
-            var valid_moves = getValidMoves($scope.current_board, turn);
-            console.log(JSON.stringify(valid_moves));
+            // console.log('Move = ' + move.row + ', ' + move.column);
+
+            // console.log(JSON.stringify(valid_moves));
 
             // check if player move is valid
             var is_move_valid = isValidMove(valid_moves, move);
-            console.log("Is move valid =" + is_move_valid);
+            // console.log("Is move valid =" + is_move_valid);
 
             if (is_move_valid) {
                 $scope.game_history.push(new_board);
-                console.log($scope.current_board, move);
-                console.log(JSON.stringify(move));
+                // console.log($scope.current_board, move);
+                // console.log(JSON.stringify(move));
                 var toFlip = checkValidity($scope.current_board, move);
-                console.log('To Flip = ' + toFlip);
+                // console.log('To Flip = ' + toFlip);
 
                 $scope.current_board = new_board;
 
@@ -124,10 +202,10 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
                 return;
             }
 
-            var is_game_over = checkGameStatus($scope.current_board);
+            var is_game_over = checkGameStatus($scope.current_board, valid_moves);
             if (!is_game_over) {
                 $scope.play(false);
-            };
+            }
             // console.log(JSON.parse(response.results[0].received.replace(/'/g, '"')));
         });
     };
@@ -220,8 +298,39 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
         return board[move.row][move.column] === '_';
     };
 
-    var checkGameStatus = function(game_board) {
-        return false;
+    var checkGameStatus = function(game_board, valid_moves) {
+        if (valid_moves.length === 0) {
+            var winner = {};
+            var countX = 0;
+            var countO = 0;
+
+            for (var i = 0; i < game_board.length; i++) {
+                for (var j = 0; j < game_board[i].length; j++) {
+                    if (game_board[i][j] === 'X') {
+                        countX += 1;
+                    } else if (game_board[i][j] === 'O') {
+                        countO += 1;
+                    }
+                }
+            }
+            if (countX > countO) {
+                winner.name = 'Bot X';
+                winner.count = countX;
+            } else {
+                winner.name = 'Bot O';
+                winner.count = countO;
+            }
+            return winner;
+        }
+
+        for (var i = 0; i < game_board.length; i++) {
+            for (var j = 0; j < game_board[i].length; j++) {
+                if (game_board[i][j] === '_') {
+                    return false;
+                }
+            }
+        }
+
     };
 
     var getRandomTurn = function() {

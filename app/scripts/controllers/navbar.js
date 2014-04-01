@@ -8,6 +8,10 @@ angular.module('reversiApp')
       'link': '/'
     },
     {
+      'title': 'Leaderboards',
+      'link': '/leaderboard'
+    },
+    {
     	'title': 'Sign In',
     	'link': '#'
     }];

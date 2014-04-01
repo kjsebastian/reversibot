@@ -7,3 +7,13 @@ table {
   width: 300px;
   text-align: center;
 }
+
+.alert {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.editor {
+  position: relative;
+  height: 500px;
+}

@@ -12,6 +12,10 @@ angular.module('reversiApp', [
         templateUrl: 'partials/main',
         controller: 'MainCtrl'
       })
+      .when('/leaderboard', {
+        templateUrl: 'partials/leaderboard',
+        controller: 'LeaderBoardCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
