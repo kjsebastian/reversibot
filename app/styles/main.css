@@ -8,6 +8,10 @@ table {
   text-align: center;
 }
 
+.table {
+  float: left;
+}
+
 .alert {
   margin-top: 10px;
   font-size: 12px;
@@ -16,4 +20,8 @@ table {
 .editor {
   position: relative;
   height: 500px;
+}
+
+.signin-btn {
+  float: right;
 }

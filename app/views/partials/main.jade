@@ -30,14 +30,19 @@ div(ng-include='\'partials/navbar\'')
     div
         button(ng-click='play(true)' class='btn btn-primary') Play
 
-    div(ng-repeat='board in game_history')
-        hr
-        table(class='table-bordered')
-            tr(ng-repeat='row in board track by $index')
-                td(ng-repeat='char in row track by $index') {{char}}
+    div.row
+        div.table.col-sm-4(ng-repeat='board in game_history')
+            hr
+            table(class='table-bordered')
+                tr(ng-repeat='row in board track by $index')
+                    td(ng-repeat='char in row track by $index') {{char}}
+
+    div.alert.alert-danger.hide#alert-danger
+        strong Uh Oh!
+        p {{errors}}
 
     div(class='alert alert-info hide' id='alert-info')
         span  No more valid moves available
 
     div(class='alert alert-success hide' id='alert-win')
-        span  The winner is <strong>{{ winner.name }}</strong> with a score of <strong>{{ winner.count }}</strong>
+        span  The winner is <strong>{{ winner.name }}</strong> with a score of <strong>{{ winner.score }}</strong>

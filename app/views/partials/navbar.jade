@@ -1,5 +1,13 @@
 .header(ng-controller='NavbarCtrl')
-  ul.nav.nav-pills.pull-right
-    li(ng-repeat='item in menu', ng-class='{active: isActive(item.link)}')
-      a(ng-href='{{item.link}}') {{item.title}}
-  h3.text-muted reversi
+    ul.nav.nav-pills.pull-right
+        li(ng-class='{active: isActive("/")}')
+            a(ng-href='/') Home
+        li(ng-class='{active: isActive("/leaderboard")}')
+            a(ng-href='/leaderboard') Leaderboards
+        li(ng-show='auth.user')
+            a(href='') Hello {{auth.user.name}}
+        li(ng-show='auth.user')
+            a(href='' ng-click='auth.$logout()') Log out
+        li
+            a(href='' ng-hide='auth.user' ng-click='auth.$login("facebook")') Log In
+h3.text-muted reversi
