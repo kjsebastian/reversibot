@@ -7,7 +7,7 @@ angular.module('reversiApp', [
   'ngRoute',
   'firebase'
 ])
-  .config(function ($routeProvider, $locationProvider) {
+.config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
@@ -22,4 +22,17 @@ angular.module('reversiApp', [
       });
       
     $locationProvider.html5Mode(true);
-  });
+})
+.factory('User', function() {
+    var name, id;
+
+    return {
+        getUser: function(){
+            return {'name': name, 'id': id};
+        },
+        setUser: function(user) {
+            name = user.name;
+            id = user.id;
+        }
+    };
+});

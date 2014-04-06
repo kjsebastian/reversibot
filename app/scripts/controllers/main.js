@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $resource) {
+angular.module('reversiApp')
+.controller('MainCtrl', function ($rootScope, $scope, $http, $resource, User) {
 
     var new_bot_editor = ace.edit('new_bot_editor');
     new_bot_editor.setTheme("ace/theme/monokai");
@@ -24,6 +25,11 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
     // bot2_editor.setValue($scope.stupid_bot.code);
 
     $scope.languages = ['Python', 'Javascript'];
+    $scope.user = {};
+
+    $rootScope.$on("$firebaseSimpleLogin:login", function(e, user) {
+      $scope.user = user;
+    });
 
     $scope.getBots = function (lang) {
         lang = lang.toLowerCase();
@@ -42,7 +48,8 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
     $scope.getBots('python');
 
     $scope.addBot = function(new_bot) {
-        $http.post('/api/new_bot', {name: new_bot.name, language:$scope.lang.toLowerCase(), code: new_bot_editor.getValue()})
+        console.log($scope.user.name);
+        $http.post('/api/new_bot', {name: new_bot.name, language:$scope.lang.toLowerCase(), code: new_bot_editor.getValue(), username: $scope.user.name})
             .success(function(data, status) {
                 // console.log(new_bot);
                 // $scope.bots = [];
@@ -92,7 +99,9 @@ angular.module('reversiApp').controller('MainCtrl', function ($scope, $http, $re
 
         lang = lang.toLowerCase();
         new_bot_editor.getSession().setMode("ace/mode/"+lang);
+        bot1_editor.destroy();
         bot1_editor.getSession().setMode("ace/mode/"+lang);
+        bot2_editor.destroy();
         bot2_editor.getSession().setMode("ace/mode/"+lang);
 
         if (lang === 'python') {

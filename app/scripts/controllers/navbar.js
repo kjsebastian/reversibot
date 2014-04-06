@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('reversiApp')
-  .controller('NavbarCtrl', function ($scope, $location, $firebase, $firebaseSimpleLogin) {
+  .controller('NavbarCtrl', function ($rootScope, $scope, $location, $firebase, $firebaseSimpleLogin, User) {
     $scope.menu = [
     {
       'title': 'Home',
@@ -18,5 +18,9 @@ angular.module('reversiApp')
 
     var ref = new Firebase('https://reversibot.firebaseio.com');
     $scope.auth = $firebaseSimpleLogin(ref);
+    // User.setUser($scope.auth.user);
 
+    $rootScope.$on("$firebaseSimpleLogin:login", function(e, user) {
+      User.setUser(user);
+    });
   });
