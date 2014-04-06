@@ -3,6 +3,40 @@ div(ng-include='\'partials/navbar\'')
 .jumbotron
 
     div.row
+        div.alert.alert-info.alert-dismissable.col-sm-12
+            button(type='button' class='close' data-dismiss='alert' aria-hidden='true')&times;
+            p <strong>Introduction</strong>
+            p.
+                Reversi is a strategy board game for two players, played on an 8×8 checkered board. There are sixty-four identical game pieces called disks (often spelled "discs"), which are White on one side and Black on the other. Players take turns placing disks on the board with their assigned color facing up. During a play, any disks of the opponent's color that are in a straight line and bounded by the disk just placed and another disk of the current player's color are turned over to the current player's color.
+            br
+            div.row
+                div.col-sm-4
+                    strong Valid Move
+                    div
+                        img(src='images/valid_reversi.png')
+                div.col-sm-4
+                    strong Invalid Move
+                    div
+                        img(src='images/invalid_reversi.png')
+
+            br
+            p The objective of the game is to have the majority of disks turned to display your color when the last playable empty square is filled.
+
+            p For full details on Reversi, please refer to <a href='http://en.wikipedia.org/wiki/Reversi'>Wikipedia</a>
+            br
+
+            p <strong>Beat the Bots: Reversi</strong>
+            br
+            p <strong>Objective:</strong> Develop your invincible Reversi bot to challenge and beat bots from around the world.
+            br
+            p <strong>Steps:</strong>
+            ol
+                li Register an account to keep track of your bots
+                li Create your own bot
+                li Challenge and beat bots from around the world to improve your rating (Coming Soon!)
+                li Top the rating table (Coming Soon!)
+
+    div.row
         div.col-sm-8
             h4 New Bot
             input(type='text' placeholder='Bot Name' class='form-control' ng-model='new_bot.name')
@@ -13,6 +47,14 @@ div(ng-include='\'partials/navbar\'')
         div.col-sm-4
             span Choose your language:
             select(class='form-control' ng-init='lang=languages[0]' ng-model='lang' ng-change='change_lang(lang)', ng-options='lang for lang in languages')
+    div.row
+        div.alert.alert-info.alert-dismissable.col-sm-12
+            button(type='button' class='close' data-dismiss='alert' aria-hidden='true')&times;
+            p <strong>How to challange</strong>
+            ol
+                li Select a bot from the list to represents X
+                li Select a bot from the list to represents O
+                li Hit the Play button
 
     div.row
         div(class='col-sm-6')
@@ -28,7 +70,7 @@ div(ng-include='\'partials/navbar\'')
             div(id='bot2_editor' class='editor')
 
     div
-        button(ng-click='play(true)' class='btn btn-primary') Play
+        button#play(ng-click='play(true)' class='btn btn-primary') Play
 
     div.row
         div.table.col-sm-4(ng-repeat='board in game_history')
