@@ -13,11 +13,11 @@ div(ng-include='\'partials/navbar\'')
                 div.col-sm-4
                     strong Valid Move
                     div
-                        img(src='images/valid_reversi.png')
+                        img(src='images/d41d8cd9.valid_reversi.png')
                 div.col-sm-4
                     strong Invalid Move
                     div
-                        img(src='images/invalid_reversi.png')
+                        img(src='images/d41d8cd9.invalid_reversi.png')
 
             br
             p The objective of the game is to have the majority of disks turned to display your color when the last playable empty square is filled.
@@ -35,6 +35,17 @@ div(ng-include='\'partials/navbar\'')
                 li Create your own bot
                 li Challenge and beat bots from around the world to improve your rating (Coming Soon!)
                 li Top the rating table (Coming Soon!)
+            br
+            p <strong>How to create a bot</strong>
+            ol
+                li Enter a bot name
+                li Modify the <code>next_move</code> method. Details of the parameters as follows
+                    ol
+                        li <strong>board</strong>: current board of the game (before your next move), represented in 2 dimensional array of type Integer
+                        li <strong>side</strong>: user’s side (O representing White or X representing Black) of type Char
+                        li <strong>validmoves</strong>: all possible valid move(s) for the turn, represented in 2 dimensional array of type Integer
+                li Hit the Add Bot Button
+            br
 
     div.row
         div.col-sm-8
