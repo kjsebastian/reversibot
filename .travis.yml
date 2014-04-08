@@ -7,7 +7,7 @@ before_script:
 before_deploy:
 - grunt build
 - cp -R app/images dist/public
-- cp -R dist/* .
+- cd dist
 deploy:
   provider: heroku
   app: reversibot
