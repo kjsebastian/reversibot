@@ -481,8 +481,7 @@ module.exports = function (grunt) {
       'mochaTest',
       'clean:server',
       'concurrent:test',
-      'autoprefixer',
-      'karma'
+      'autoprefixer'
     ]);
   });  
 
