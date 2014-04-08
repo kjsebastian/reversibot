@@ -53,11 +53,12 @@ angular.module('reversiApp')
             .success(function(data, status) {
                 // console.log(new_bot);
                 // $scope.bots = [];
-                $scope.bots.push(new_bot);
+                
             })
             .error(function(data, error) {
                 console.log(error);
             });
+        $scope.bots.push(new_bot);
     };
 
     $scope.VerifierModel = $resource('/api/use_verify_service', {}, {

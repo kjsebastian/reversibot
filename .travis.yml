@@ -4,10 +4,12 @@ node_js:
 before_script:
 - npm install -g bower grunt-cli
 - bower install
+
 before_deploy:
 - grunt build
 - cp -R app/images dist/public
 - cd dist
+
 deploy:
   provider: heroku
   app: reversibot
