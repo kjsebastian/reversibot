@@ -11,5 +11,6 @@ after_success:
 deploy:
   provider: heroku
   app: reversibot
+  strategy:git
   api_key:
     secure: AWj8LWtj7pIXQLCJueoskWmZP5KWrZtfpttWj905NvcKjFK+R+NgcryoyL1cO4rW4lydGQK5IIZXEpMTcHxaU9gtfcHBkDflQtxQAz1lnLlCveXZnkOU38qoeH6IBNfusZO6tSuyeS53khFLTCoX60bUDVLSxCjZGGG8ix4oQgM=
