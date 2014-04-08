@@ -83,8 +83,7 @@ div(ng-include='\'partials/navbar\'')
         button#play(ng-click='play(true)' class='btn btn-primary') Play
 
     div.row
-        div.table.col-sm-4(ng-repeat='board in game_history')
-            hr
+        div.col-md-3(ng-repeat='board in game_history')
             table(class='table-bordered')
                 tr(ng-repeat='row in board track by $index')
                     td(ng-repeat='char in row track by $index') {{char}}

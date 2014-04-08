@@ -4,13 +4,9 @@
 
 table {
   margin-top: 20px;
-  line-height: 30px;
+  /*line-height: 30px;*/
   width: 300px;
   text-align: center;
-}
-
-.table {
-  float: left;
 }
 
 .alert {
