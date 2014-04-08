@@ -1,13 +1,12 @@
 div(ng-include='\'partials/navbar\'')
 
 div(class='container')
-    div(class='jumbotron')
-        table(class='table')
-            tr
-                td <strong>Bot Name</strong>
-                td <strong>User</strong>
-                td <strong>Score</strong>
-            tr(ng-repeat='bot in top')
-                td {{bot.name}}
-                td {{bot.username}}
-                td {{bot.score}}
+    table(class='table')
+        tr
+            td <strong>Bot Name</strong>
+            td <strong>User</strong>
+            td <strong>Score</strong>
+        tr(ng-repeat='bot in top')
+            td {{bot.name}}
+            td {{bot.username}}
+            td {{bot.score}}
