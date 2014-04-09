@@ -11,7 +11,7 @@ describe('GET /api/all_bots', function() {
       .get('/api/all_bots')
       .end(function(err, res) {
         if (err) return done(err);
-        res.body.should.be.instanceof(Array);
+        res.body.should.be.instanceof(Object);
         done();
       });
   });
