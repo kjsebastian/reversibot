@@ -17,7 +17,7 @@ angular.module('reversiApp')
     bot2_editor.setReadOnly(true);
 
     $scope.starting_bot = {name: 'Starting Bot', code: "#You may import\nimport random\ndef next_move(board, side, validmoves):\n  #Your logic here\n  return board", language: 'Python'};
-    $scope.starting_bot_js = {name: 'Starting Bot', code: "var next_move = function(board, side, validmoves) {\n    // Write your code here\n};", language:'javascript'};
+    $scope.starting_bot_js = {name: 'Starting Bot', code: "var next_move = function(board, side, validmoves) {\n    // Write your code here\n    return JSON.stringify(board)\n};", language:'javascript'};
     $scope.bots = [$scope.stupid_bot];
 
     new_bot_editor.setValue($scope.starting_bot.code);
